@@ -109,3 +109,4 @@ dist
 # .NET Core
 bin
 obj
+appsettings*.json
