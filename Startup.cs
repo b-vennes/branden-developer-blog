@@ -30,7 +30,7 @@ namespace Blog.Backend
             services.AddControllers();
             services.AddDbContext<DataContext>(x => x.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             
-            services.AddScoped<IBlogRepository, BlogRepository>();
+            services.AddScoped<IContentRepository, ContentRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

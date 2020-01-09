@@ -1,6 +1,6 @@
 namespace Blog.Backend.Dtos
 {
-    public class PublishArticleDto
+    public class UpdateContentDto
     {
         public string Url { get; set; }
         public bool Hidden { get; set; }

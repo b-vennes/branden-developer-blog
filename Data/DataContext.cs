@@ -7,6 +7,6 @@ namespace Blog.Backend.Data
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
-        public DbSet<Article> Articles { get; set; }
+        public DbSet<Content> Contents { get; set; }
     }
 }

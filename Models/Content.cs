@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Blog.Backend.Models
 {
-    public class Article
+    public class Content
     {        
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Url { get; set; }
         public DateTime PublishedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
