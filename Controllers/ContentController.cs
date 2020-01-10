@@ -10,11 +10,11 @@ namespace Blog.Backend.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ArticlesController : ControllerBase
+    public class ContentController : ControllerBase
     {
         private readonly IContentRepository _contentRepository;
 
-        public ArticlesController(IContentRepository contentRepository)
+        public ContentController(IContentRepository contentRepository)
         {
             _contentRepository = contentRepository;
         }
@@ -28,7 +28,7 @@ namespace Blog.Backend.Controllers
         }
 
         [HttpGet("{name}")]
-        public async Task<IActionResult> GetContent(string name)
+        public async Task<IActionResult> GetContentForDisplay(string name)
         {
             var content = await _contentRepository.Get(name);
 
@@ -37,7 +37,16 @@ namespace Blog.Backend.Controllers
                 return NotFound();
             }
 
-            return Ok(content);
+            var data = _contentRepository.GetData(content.Url, content.Format);
+
+            var contentForDisplay = new ContentForDisplayDto() {
+                Name = content.Id,
+                Data = data,
+                PublishedDate = content.PublishedDate,
+                UpdatedDate = content.UpdatedDate
+            };
+
+            return Ok(contentForDisplay);
         }
 
         [HttpPost]
@@ -51,6 +60,7 @@ namespace Blog.Backend.Controllers
             }
 
             var content = new Content() {
+                Id = contentToPublish.Name,
                 Url = contentToPublish.Url,
                 Hidden = contentToPublish.Hidden,
                 PublishedDate = DateTime.Now,
@@ -70,11 +80,12 @@ namespace Blog.Backend.Controllers
         [HttpPut("{name}")]
         public async Task<IActionResult> UpdateContent(string name, UpdateContentDto updateContentDto)
         {
-            var article = await _contentRepository.Get(name);
+            var contentToUpdate = await _contentRepository.Get(name);
 
-            article.Url = updateContentDto.Url;
-            article.Hidden = updateContentDto.Hidden;
-            article.UpdatedDate = DateTime.Now;
+            contentToUpdate.Url = updateContentDto.Url;
+            contentToUpdate.Format = updateContentDto.Format;
+            contentToUpdate.Hidden = updateContentDto.Hidden;
+            contentToUpdate.UpdatedDate = DateTime.Now;
 
             if (await _contentRepository.SaveAll())
             {

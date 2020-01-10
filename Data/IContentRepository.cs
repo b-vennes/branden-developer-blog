@@ -12,5 +12,6 @@ namespace Blog.Backend.Data
         Task<bool> SaveAll();
         Task<IEnumerable<Content>> GetAll();
         Task<Content> Get(string id);
+        string GetData(string url, string format);
     }
 }
