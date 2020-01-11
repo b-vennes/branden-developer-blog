@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Blog.Backend.Data;
+using Blog.Backend.Managers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,7 +33,10 @@ namespace Blog.Backend
             services.AddDbContext<DataContext>(x => x.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             
             services.AddScoped<IContentRepository, ContentRepository>();
-            services.AddScoped<IRestClient, RestClient>();
+            services.AddScoped<IContentManager, ContentManager>();
+            services.AddScoped<IContentDataRetriever, ContentDataRetriever>();
+
+            services.AddSingleton<IRestClient, RestClient>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Blog.Backend.Models;
+using Blog.Backend.DatabaseModels;
 
 namespace Blog.Backend.Data
 {
@@ -10,8 +10,7 @@ namespace Blog.Backend.Data
 
         void Delete(Content entity);
         Task<bool> SaveAll();
-        Task<IEnumerable<Content>> GetAll();
+        Task<List<Content>> GetAll();
         Task<Content> Get(string id);
-        string GetData(string url, string format);
     }
 }

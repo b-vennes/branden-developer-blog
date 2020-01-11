@@ -1,4 +1,4 @@
-using Blog.Backend.Models;
+using Blog.Backend.DatabaseModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Backend.Data

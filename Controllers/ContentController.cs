@@ -1,9 +1,7 @@
 using System;
-using System.Linq;
 using System.Threading.Tasks;
-using Blog.Backend.Data;
 using Blog.Backend.Dtos;
-using Blog.Backend.Models;
+using Blog.Backend.Managers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Backend.Controllers
@@ -12,107 +10,95 @@ namespace Blog.Backend.Controllers
     [Route("api/[controller]")]
     public class ContentController : ControllerBase
     {
-        private readonly IContentRepository _contentRepository;
+        private readonly IContentManager _contentManager;
 
-        public ContentController(IContentRepository contentRepository)
+        public ContentController(IContentManager contentManager)
         {
-            _contentRepository = contentRepository;
+            _contentManager = contentManager;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllContents()
+        public async Task<IActionResult> GetContentOverviews()
         {
-            var contents = await _contentRepository.GetAll();
+            var contents = await _contentManager.RetrieveContentOverviews();
 
             return Ok(contents);
         }
 
-        [HttpGet("{name}")]
-        public async Task<IActionResult> GetContentForDisplay(string name)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetContentData(string id)
         {
-            var content = await _contentRepository.Get(name);
+            var contentData = await _contentManager.RetrieveContentData(id);
 
-            if (content == null)
+            if (contentData == null)
             {
                 return NotFound();
             }
 
-            var data = _contentRepository.GetData(content.Url, content.Format);
-
-            var contentForDisplay = new ContentForDisplayDto() {
-                Name = content.Id,
-                Data = data,
-                PublishedDate = content.PublishedDate,
-                UpdatedDate = content.UpdatedDate
-            };
-
-            return Ok(contentForDisplay);
+            return Ok(contentData);
         }
 
         [HttpPost]
         public async Task<IActionResult> PublishContent(PublishContentDto contentToPublish)
         {
-            var contents = await _contentRepository.GetAll();
+            var saveSuccess = false;
 
-            if (contents.Any(c => c.Id == contentToPublish.Name))
+            try
             {
-                return BadRequest($"Content with name {contentToPublish.Name} already exists.");
+                saveSuccess = await _contentManager.Publish(contentToPublish);
+            }
+            catch(ArgumentException argEx)
+            {
+                return BadRequest(argEx);
             }
 
-            var content = new Content() {
-                Id = contentToPublish.Name,
-                Url = contentToPublish.Url,
-                Hidden = contentToPublish.Hidden,
-                PublishedDate = DateTime.Now,
-                UpdatedDate = DateTime.Now
-            };
-
-            _contentRepository.Add(content);
-
-            if (await _contentRepository.SaveAll())
+            if (saveSuccess)
             {
                 return NoContent();
             }
-
-            throw new Exception($"Publishing content failed on save");
+            else
+            {
+                return StatusCode(500, "Failed to publish content.");
+            }
         }
 
-        [HttpPut("{name}")]
-        public async Task<IActionResult> UpdateContent(string name, UpdateContentDto updateContentDto)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateContent(string id, UpdateContentDto updateContentDto)
         {
-            var contentToUpdate = await _contentRepository.Get(name);
+            var saveSuccess = await _contentManager.Update(id, updateContentDto);
 
-            contentToUpdate.Url = updateContentDto.Url;
-            contentToUpdate.Format = updateContentDto.Format;
-            contentToUpdate.Hidden = updateContentDto.Hidden;
-            contentToUpdate.UpdatedDate = DateTime.Now;
-
-            if (await _contentRepository.SaveAll())
+            if (saveSuccess)
             {
                 return NoContent();
             }
-
-            throw new Exception($"Updating content failed on save");
+            else
+            {
+                return StatusCode(500, "Failed to update content.");
+            }
         }
 
-        [HttpDelete("{name}")]
-        public async Task<IActionResult> DeleteArticle(string name)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteArticle(string id)
         {
-            var article = await _contentRepository.Get(name);
-
-            if (article == null)
+            var saveSuccess = false; 
+            
+            try
             {
-                return NotFound();
+                saveSuccess = await _contentManager.Delete(id);
+            }
+            catch (ArgumentException argEx)
+            {
+                return NotFound(argEx);
             }
 
-            _contentRepository.Delete(article);
-
-            if (await _contentRepository.SaveAll())
+            if (saveSuccess)
             {
                 return NoContent();
             }
-
-            throw new Exception("Deleting content failed on save");
+            else
+            {
+                return StatusCode(500, "Failed to delete content.");
+            }
         }
 
     }
