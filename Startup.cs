@@ -31,6 +31,8 @@ namespace Blog.Backend
         {
             services.AddControllers();
             services.AddDbContext<DataContext>(x => x.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddCors();
             
             services.AddScoped<IContentRepository, ContentRepository>();
             services.AddScoped<IContentManager, ContentManager>();
@@ -46,6 +48,8 @@ namespace Blog.Backend
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseRouting();
 

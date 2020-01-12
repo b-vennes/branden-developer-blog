@@ -25,8 +25,7 @@ namespace Blog.Backend.Data
             }
 
             var data = format switch {
-                "markdown" => GetDataFromMarkdwon(response.Content),
-                _ => null
+                _ => GetDataFromMarkdwon(response.Content)
             };
 
             return data;
