@@ -1,6 +1,6 @@
 using System;
 
-namespace Blog.Backend.DatabaseModels
+namespace DevBlog.DatabaseModels
 {
     public class Content
     {        

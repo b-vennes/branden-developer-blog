@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Blog.Backend.DatabaseModels;
+using DevBlog.DatabaseModels;
 using Microsoft.EntityFrameworkCore;
 using RestSharp;
 
-namespace Blog.Backend.Data
+namespace DevBlog.Data
 {
     public class ContentRepository : IContentRepository
     {

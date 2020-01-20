@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 using Markdig;
 using RestSharp;
 
-namespace Blog.Backend.Data
+namespace DevBlog.Data
 {
     public class ContentDataRetriever : IContentDataRetriever
     {

@@ -1,4 +1,4 @@
-namespace Blog.Backend.Dtos
+namespace DevBlog.Dtos
 {
     public class PublishContentDto
     {

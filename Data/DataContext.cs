@@ -1,12 +1,13 @@
-using Blog.Backend.DatabaseModels;
+using DevBlog.DatabaseModels;
 using Microsoft.EntityFrameworkCore;
 
-namespace Blog.Backend.Data
+namespace DevBlog.Data
 {
     public class DataContext : DbContext
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
         public DbSet<Content> Contents { get; set; }
+        public DbSet<User> AdminUsers { get; set; }
     }
 }

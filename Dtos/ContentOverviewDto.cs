@@ -1,6 +1,6 @@
 using System;
 
-namespace Blog.Backend.Dtos
+namespace DevBlog.Dtos
 {
     public class ContentOverviewDto
     {

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Blog.Backend.DatabaseModels;
+using DevBlog.DatabaseModels;
 
-namespace Blog.Backend.Data
+namespace DevBlog.Data
 {
     public interface IContentRepository
     {

@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Blog.Backend.Data;
-using Blog.Backend.Managers;
+using System.Text;
+using DevBlog.Data;
+using DevBlog.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -15,7 +16,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RestSharp;
 
-namespace Blog.Backend
+namespace DevBlog
 {
     public class Startup
     {
@@ -30,15 +31,18 @@ namespace Blog.Backend
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<DataContext>(x => x.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<DataContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddCors();
             
             services.AddScoped<IContentRepository, ContentRepository>();
-            services.AddScoped<IContentManager, ContentManager>();
+            services.AddScoped<IContentService, ContentService>();
             services.AddScoped<IContentDataRetriever, ContentDataRetriever>();
 
-            services.AddSingleton<IRestClient, RestClient>();
+            services.AddScoped<ISecurityRepository, SecurityRepository>();
+            services.AddScoped<ISecurityService, SecurityService>();
+
+            services.AddScoped<IRestClient, RestClient>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,8 +56,6 @@ namespace Blog.Backend
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseRouting();
-
-            app.UseAuthorization();
 
             app.UseStaticFiles();
 

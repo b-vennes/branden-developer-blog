@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Blog.Backend.Dtos;
+using DevBlog.Dtos;
 
-namespace Blog.Backend.Managers
+namespace DevBlog.Services
 {
-    public interface IContentManager
+    public interface IContentService
     {
         /// <summary>
         /// Retrieves the overviews of all non-hidden content.

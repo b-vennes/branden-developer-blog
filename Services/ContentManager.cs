@@ -2,18 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Blog.Backend.Data;
-using Blog.Backend.DatabaseModels;
-using Blog.Backend.Dtos;
+using DevBlog.Data;
+using DevBlog.DatabaseModels;
+using DevBlog.Dtos;
 
-namespace Blog.Backend.Managers
+namespace DevBlog.Services
 {
-    public class ContentManager : IContentManager
+    public class ContentService : IContentService
     {
         private readonly IContentRepository _contentRepository;
         private readonly IContentDataRetriever _contentDataRetriever;
 
-        public ContentManager(IContentRepository contentRepository, IContentDataRetriever contentDataRetriever)
+        public ContentService(IContentRepository contentRepository, IContentDataRetriever contentDataRetriever)
         {
             _contentRepository = contentRepository;
             _contentDataRetriever = contentDataRetriever;

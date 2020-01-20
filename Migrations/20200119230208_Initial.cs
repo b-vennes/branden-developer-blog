@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Blog.Backend.Migrations
+namespace DevBlog.Migrations
 {
     public partial class Initial : Migration
     {
@@ -12,6 +12,7 @@ namespace Blog.Backend.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
                     Url = table.Column<string>(nullable: true),
                     Format = table.Column<string>(nullable: true),
                     PublishedDate = table.Column<DateTime>(nullable: false),

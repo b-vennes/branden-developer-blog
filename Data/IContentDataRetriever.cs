@@ -1,4 +1,4 @@
-namespace Blog.Backend.Data
+namespace DevBlog.Data
 {
     public interface IContentDataRetriever
     {
