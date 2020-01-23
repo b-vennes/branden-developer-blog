@@ -4,6 +4,6 @@ namespace DevBlog.Services
 {
     public interface ISecurityService
     {
-        Task<bool> ValidateToken(string token);
+        Task<bool> ValidateUser(string token);
     }
 }

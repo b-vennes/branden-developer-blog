@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using DevBlog.DatabaseModels;
 using Microsoft.EntityFrameworkCore;
@@ -14,9 +15,14 @@ namespace DevBlog.Data
             _context = context;
         }
 
-        public async Task<List<User>> GetAll()
+        public Task<List<User>> GetAllUsers()
         {
-            return await _context.AdminUsers.ToListAsync();
+            return _context.Users.ToListAsync();
+        }
+
+        public async Task<bool> SaveAll()
+        {
+            return await _context.SaveChangesAsync() > 0;
         }
     }
 }

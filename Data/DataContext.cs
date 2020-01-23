@@ -8,6 +8,6 @@ namespace DevBlog.Data
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
         public DbSet<Content> Contents { get; set; }
-        public DbSet<User> AdminUsers { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

@@ -44,7 +44,7 @@ namespace DevBlog.Controllers
         public async Task<IActionResult> PublishContent(PublishContentDto contentToPublish)
         {
             var token = Request.Headers["Authorization"];
-            if (!await _securityService.ValidateToken(token))
+            if (!await _securityService.ValidateUser(token))
             {
                 return Unauthorized();
             }
@@ -74,7 +74,7 @@ namespace DevBlog.Controllers
         public async Task<IActionResult> UpdateContent(string id, UpdateContentDto updateContentDto)
         {
             var token = Request.Headers["Authorization"];
-            if (!await _securityService.ValidateToken(token))
+            if (!await _securityService.ValidateUser(token))
             {
                 return Unauthorized();
             }
@@ -95,7 +95,7 @@ namespace DevBlog.Controllers
         public async Task<IActionResult> DeleteArticle(string id)
         {
             var token = Request.Headers["Authorization"];
-            if (!await _securityService.ValidateToken(token))
+            if (!await _securityService.ValidateUser(token))
             {
                 return Unauthorized();
             }
