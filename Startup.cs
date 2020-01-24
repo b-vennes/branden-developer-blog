@@ -31,6 +31,8 @@ namespace DevBlog
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddGrpc();
+
             services.AddDbContext<DataContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddCors();
@@ -62,6 +64,7 @@ namespace DevBlog
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapGrpcService<AdminContentService>();
             });
         }
     }
