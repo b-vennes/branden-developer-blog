@@ -20,6 +20,11 @@ namespace DevBlog.Data
             return _context.Users.ToListAsync();
         }
 
+        public void AddUser(User user)
+        {
+            _context.Users.Add(user);
+        }
+
         public async Task<bool> SaveAll()
         {
             return await _context.SaveChangesAsync() > 0;

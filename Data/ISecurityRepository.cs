@@ -6,7 +6,9 @@ namespace DevBlog.Data
 {
     public interface ISecurityRepository
     {
-         Task<List<User>> GetAllUsers();
+        Task<List<User>> GetAllUsers();
+
+        void AddUser(User user);
 
         Task<bool> SaveAll();
     }

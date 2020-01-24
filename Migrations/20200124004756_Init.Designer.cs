@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DevBlog.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200119230208_Initial")]
-    partial class Initial
+    [Migration("20200124004756_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -47,6 +47,24 @@ namespace DevBlog.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Contents");
+                });
+
+            modelBuilder.Entity("DevBlog.DatabaseModels.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<byte[]>("TokenHash")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<byte[]>("TokenSalt")
+                        .HasColumnType("varbinary(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }

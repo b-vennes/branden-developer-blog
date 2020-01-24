@@ -60,9 +60,6 @@ namespace DevBlog.Migrations
                     b.Property<byte[]>("TokenSalt")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("Username")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Users");
