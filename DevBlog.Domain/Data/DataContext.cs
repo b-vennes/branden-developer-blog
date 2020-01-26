@@ -8,6 +8,5 @@ namespace DevBlog.Domain.Data
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
         public DbSet<Content> Contents { get; set; }
-        public DbSet<User> Users { get; set; }
     }
 }

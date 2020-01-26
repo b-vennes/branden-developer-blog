@@ -49,6 +49,7 @@ namespace DevBlog.Domain.Services
                 Title = publishContent.Title,
                 Url = publishContent.Url,
                 Hidden = publishContent.Hidden,
+                Format = publishContent.Format,
                 PublishedDate = DateTime.Now,
                 UpdatedDate = DateTime.Now
             };

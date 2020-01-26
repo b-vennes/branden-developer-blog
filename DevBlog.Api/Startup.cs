@@ -37,11 +37,9 @@ namespace DevBlog.Api
 
             services.AddCors();
             
+            services.AddScoped<IContentRepository, ContentRepository>();
             services.AddScoped<IContentService, ContentService>();
             services.AddScoped<IContentDataRetriever, ContentDataRetriever>();
-
-            services.AddScoped<ISecurityRepository, SecurityRepository>();
-            services.AddScoped<ISecurityService, SecurityService>();
 
             services.AddScoped<IRestClient, RestClient>();
         }
@@ -54,11 +52,9 @@ namespace DevBlog.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-
             app.UseRouting();
 
-            app.UseStaticFiles();
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseEndpoints(endpoints =>
             {

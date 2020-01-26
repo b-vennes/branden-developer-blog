@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace DevBlog.Migrations
+namespace DevBlog.Domain.Migrations
 {
     [DbContext(typeof(DataContext))]
     partial class DataContextModelSnapshot : ModelSnapshot
@@ -45,24 +45,6 @@ namespace DevBlog.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Contents");
-                });
-
-            modelBuilder.Entity("DevBlog.Domain.DataBaseModels.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<byte[]>("TokenHash")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<byte[]>("TokenSalt")
-                        .HasColumnType("varbinary(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }
