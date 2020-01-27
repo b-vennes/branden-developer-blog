@@ -14,16 +14,20 @@ message PublishRequest {
   string id = 1;
   string title = 2;
   string url = 3;
-  string format = 4;
-  bool hidden = 5;
+  string summary = 4;
+  string imageUrl = 5;
+  string format = 6;
+  bool hidden = 7;
 }
 
 message UpdateRequest {
   string id = 1;
   string title = 2;
   string url = 3;
-  string format = 4;
-  bool hidden = 5;
+  string summary = 4;
+  string imageUrl = 5;
+  string format = 6;
+  bool hidden = 7;
 }
 
 message DeleteRequest {
