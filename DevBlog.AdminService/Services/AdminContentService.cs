@@ -24,6 +24,8 @@ namespace DevBlog.AdminService.Services
                 Id = request.Id,
                 Title = request.Title,
                 Url = request.Url,
+                Summary = request.Summary,
+                ImageUrl = request.ImageUrl,
                 Format = request.Format,
                 Hidden = request.Hidden
             };
@@ -42,6 +44,8 @@ namespace DevBlog.AdminService.Services
             var updateDto = new UpdateContentDto() {
                 Title = request.Title,
                 Url = request.Url,
+                Summary = request.Summary,
+                ImageUrl = request.ImageUrl,
                 Format = request.Format,
                 Hidden = request.Hidden
             };

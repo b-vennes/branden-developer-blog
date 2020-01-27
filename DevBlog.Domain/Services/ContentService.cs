@@ -17,7 +17,6 @@ namespace DevBlog.Domain.Services
         {
             _contentRepository = contentRepository;
             _contentDataRetriever = contentDataRetriever;
-
         }
 
         public async Task<bool> Delete(string id)
@@ -43,11 +42,15 @@ namespace DevBlog.Domain.Services
                 throw new ArgumentException($"Content with id {publishContent.Id} already exists.");
             }
 
+            var data = _contentDataRetriever.GetData(publishContent.Url, publishContent.Format);
+
             var content = new Content()
             {
                 Id = publishContent.Id,
                 Title = publishContent.Title,
-                Url = publishContent.Url,
+                Summary = publishContent.Summary,
+                ImageUrl = publishContent.ImageUrl,
+                Data = data,
                 Hidden = publishContent.Hidden,
                 Format = publishContent.Format,
                 PublishedDate = DateTime.Now,
@@ -68,13 +71,13 @@ namespace DevBlog.Domain.Services
                 return null;
             }
 
-            var data = _contentDataRetriever.GetData(content.Url, content.Format);
-
             var contentForDisplay = new ContentDataDto()
             {
                 Id = content.Id,
                 Title = content.Title,
-                Data = data,
+                Data = content.Data,
+                Summary = content.Summary,
+                ImageUrl = content.ImageUrl,
                 PublishedDate = content.PublishedDate,
                 UpdatedDate = content.UpdatedDate
             };
@@ -93,7 +96,10 @@ namespace DevBlog.Domain.Services
                     {
                         Id = c.Id,
                         Title = c.Title,
-                        PublishedDate = c.PublishedDate
+                        Summary = c.Summary,
+                        ImageUrl = c.ImageUrl,
+                        PublishedDate = c.PublishedDate,
+                        UpdatedDate = c.UpdatedDate
                     };
                 }).ToList();
 
@@ -104,8 +110,12 @@ namespace DevBlog.Domain.Services
         {
             var contentToUpdate = await _contentRepository.Get(id);
 
-            contentToUpdate.Url = updateContent.Url;
+            var updatedData = _contentDataRetriever.GetData(updateContent.Url, updateContent.Format);
+
             contentToUpdate.Title = updateContent.Title;
+            contentToUpdate.Data = updatedData;
+            contentToUpdate.Summary = updateContent.Summary;
+            contentToUpdate.ImageUrl = updateContent.ImageUrl;
             contentToUpdate.Format = updateContent.Format;
             contentToUpdate.Hidden = updateContent.Hidden;
             contentToUpdate.UpdatedDate = DateTime.Now;
