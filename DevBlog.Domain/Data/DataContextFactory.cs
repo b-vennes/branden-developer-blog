@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using DevBlog.Domain.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -13,7 +14,8 @@ namespace DevBlog.Domain.Data
         {
             var options = new DbContextOptionsBuilder<DataContext>();
             var config = GetAppConfiguration();
-            options.UseSqlServer(config.GetConnectionString("DefaultConnection"));
+
+            options.UseSqlServer(StartupUtility.GetConnectionString(config));
 
             return new DataContext(options.Options);
         }

@@ -15,7 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RestSharp;
-
+using DevBlog.Domain.Utilities;
 
 namespace DevBlog.Api
 {
@@ -33,7 +33,7 @@ namespace DevBlog.Api
         {
             services.AddControllers();
 
-            services.AddDbContext<DataContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<DataContext>(x => x.UseSqlServer(StartupUtility.GetConnectionString(Configuration)));
 
             services.AddCors();
             

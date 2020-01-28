@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DevBlog.AdminService.Services;
 using DevBlog.Domain.Data;
 using DevBlog.Domain.Services;
+using DevBlog.Domain.Utilities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -31,12 +32,7 @@ namespace DevBlog.AdminService
         {
             services.AddGrpc();
 
-            services.AddDbContext<DataContext>(
-                x => x.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection"),
-                    options => options.MigrationsAssembly("DevBlog.Domain.Migrations")        
-                )
-            );
+            services.AddDbContext<DataContext>(x => x.UseSqlServer(StartupUtility.GetConnectionString(Configuration)));
             
             services.AddScoped<IContentRepository, ContentRepository>();
             services.AddScoped<IContentService, ContentService>();
