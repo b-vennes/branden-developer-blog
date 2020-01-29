@@ -1,0 +1,22 @@
+version: '3'
+services: 
+  api:
+    build:
+      context: .
+      dockerfile: DevBlog.Api/Dockerfile
+    ports:
+      - "5000:80"
+    environment:
+      - ASPNET_DBSERVER=${ASPNET_DBSERVER}
+      - ASPNET_DBUSERID=${ASPNET_DBUSERID}
+      - ASPNET_DBPASSWORD=${ASPNET_DBPASSWORD}
+  admin:
+    build:
+      context: .
+      dockerfile: DevBlog.AdminService/Dockerfile
+    ports:
+      - "7777:80"
+    environment:
+      - ASPNET_DBSERVER=${ASPNET_DBSERVER}
+      - ASPNET_DBUSERID=${ASPNET_DBUSERID}
+      - ASPNET_DBPASSWORD=${ASPNET_DBPASSWORD}
