@@ -4,4 +4,6 @@
 # .NET Core
 bin
 obj
-appsettings*.json
+
+# Docker Compose Environmental Variables/Secrets
+.env
