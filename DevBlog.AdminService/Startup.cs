@@ -9,10 +9,11 @@ using DevBlog.Domain.Utilities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
+using MongoDB.Driver;
 using RestSharp;
 
 namespace DevBlog.AdminService
@@ -32,7 +33,7 @@ namespace DevBlog.AdminService
         {
             services.AddGrpc();
 
-            services.AddDbContext<DataContext>(x => x.UseSqlServer(StartupUtility.GetConnectionString(Configuration)));
+            services.AddScoped<IMongoClient, MongoClient>(sp => new MongoClient(Configuration.GetConnectionString("DefaultConnection")));
             
             services.AddScoped<IContentRepository, ContentRepository>();
             services.AddScoped<IContentService, ContentService>();

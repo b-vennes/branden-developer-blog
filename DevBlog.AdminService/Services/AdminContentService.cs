@@ -30,12 +30,22 @@ namespace DevBlog.AdminService.Services
                 Hidden = request.Hidden
             };
 
-            var success = await _contentService.Publish(publishDto);
+            var success = true;
+            var errorMessage = "";
+
+            try
+            {
+                await _contentService.Publish(publishDto);
+            }
+            catch (Exception ex)
+            {
+                errorMessage = $"{ex}";
+            }
 
             return new Result
             {
                 Success = success,
-                Message = ""
+                Message = errorMessage
             };
         }
 
@@ -50,23 +60,43 @@ namespace DevBlog.AdminService.Services
                 Hidden = request.Hidden
             };
 
-            var success = await _contentService.Update(request.Id, updateDto);
+            var success = true;
+            var errorMessage = "";
+
+            try
+            {
+                await _contentService.Update(request.Id, updateDto);
+            }
+            catch (Exception ex)
+            {
+                errorMessage = $"{ex}";
+            }
 
             return new Result
             {
                 Success = success,
-                Message = ""
+                Message = errorMessage
             };
         }
 
         public async override Task<Result> Delete(DeleteRequest request, ServerCallContext context)
         {
-            var success = await _contentService.Delete(request.Id);
+            var success = true;
+            var errorMessage = "";
+
+            try
+            {
+                await _contentService.Delete(request.Id);
+            }
+            catch (Exception ex)
+            {
+                errorMessage = $"{ex}";
+            }
 
             return new Result
             {
                 Success = success,
-                Message = ""
+                Message = errorMessage
             };
         }
     }

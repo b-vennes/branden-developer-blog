@@ -23,22 +23,19 @@ namespace DevBlog.Domain.Services
         /// Publishes the content.
         /// </summary>
         /// <param name="publishContent">The content to publish.</param>
-        /// <returns>The success of the save action.</returns>
-        Task<bool> Publish(PublishContentDto publishContent);
+        Task Publish(PublishContentDto publishContent);
 
         /// <summary>
         /// Updates the content.
         /// </summary>
         /// <param name="id">The id of the content.</param>
         /// <param name="updateContent">The updated content.</param>
-        /// <returns>The success of the save action.</returns>
-        Task<bool> Update(string id, UpdateContentDto updateContent);
+        Task Update(string id, UpdateContentDto updateContent);
 
         /// <summary>
         /// Deletes the content.
         /// </summary>
         /// <param name="id">The id of the content.</param>
-        /// <returns>The success of the save action.</returns>
-        Task<bool> Delete(string id);
+        Task Delete(string id);
     }
 }
