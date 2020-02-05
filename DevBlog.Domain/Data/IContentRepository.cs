@@ -8,9 +8,12 @@ namespace DevBlog.Domain.Data
     {
         void Add(Content entity);
 
+        void Update(Content entity);
+
         void Delete(Content entity);
-        Task<bool> SaveAll();
+
         Task<List<Content>> GetAll();
+        
         Task<Content> Get(string id);
     }
 }

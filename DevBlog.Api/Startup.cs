@@ -9,13 +9,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RestSharp;
 using DevBlog.Domain.Utilities;
+using Microsoft.Extensions.Options;
+using MongoDB.Driver;
 
 namespace DevBlog.Api
 {
@@ -33,7 +34,7 @@ namespace DevBlog.Api
         {
             services.AddControllers();
 
-            services.AddDbContext<DataContext>(x => x.UseSqlServer(StartupUtility.GetConnectionString(Configuration)));
+            services.AddScoped<IMongoClient, MongoClient>(sp => new MongoClient(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddCors();
             

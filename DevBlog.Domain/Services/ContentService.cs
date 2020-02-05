@@ -19,7 +19,7 @@ namespace DevBlog.Domain.Services
             _contentDataRetriever = contentDataRetriever;
         }
 
-        public async Task<bool> Delete(string id)
+        public async Task Delete(string id)
         {
             var content = await _contentRepository.Get(id);
 
@@ -29,11 +29,9 @@ namespace DevBlog.Domain.Services
             }
 
             _contentRepository.Delete(content);
-
-            return await _contentRepository.SaveAll();
         }
 
-        public async Task<bool> Publish(PublishContentDto publishContent)
+        public async Task Publish(PublishContentDto publishContent)
         {
             var contents = await _contentRepository.GetAll();
 
@@ -58,8 +56,6 @@ namespace DevBlog.Domain.Services
             };
 
             _contentRepository.Add(content);
-
-            return await _contentRepository.SaveAll();
         }
 
         public async Task<ContentDataDto> RetrieveContentData(string id)
@@ -106,7 +102,7 @@ namespace DevBlog.Domain.Services
             return contentOverviews;
         }
 
-        public async Task<bool> Update(string id, UpdateContentDto updateContent)
+        public async Task Update(string id, UpdateContentDto updateContent)
         {
             var contentToUpdate = await _contentRepository.Get(id);
 
@@ -120,7 +116,7 @@ namespace DevBlog.Domain.Services
             contentToUpdate.Hidden = updateContent.Hidden;
             contentToUpdate.UpdatedDate = DateTime.Now;
 
-            return await _contentRepository.SaveAll();
+            _contentRepository.Update(contentToUpdate);
         }
     }
 }
