@@ -99,7 +99,9 @@ namespace DevBlog.Domain.Services
                         PublishedDate = c.PublishedDate,
                         UpdatedDate = c.UpdatedDate
                     };
-                }).ToList();
+                })
+                .OrderByDescending(c => c.PublishedDate)
+                .ToList();
 
             return contentOverviews;
         }

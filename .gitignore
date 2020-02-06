@@ -7,3 +7,5 @@ obj
 
 # Docker Compose Environmental Variables/Secrets
 .env
+
+*/wwwroot/images
