@@ -13,6 +13,8 @@ namespace DevBlog.Domain.Services
         private readonly IContentRepository _contentRepository;
         private readonly IContentDataRetriever _contentDataRetriever;
 
+        private readonly string[] nonOverviewContent = { "about", "resume" };
+
         public ContentService(IContentRepository contentRepository, IContentDataRetriever contentDataRetriever)
         {
             _contentRepository = contentRepository;
@@ -85,7 +87,7 @@ namespace DevBlog.Domain.Services
         {
             var contents = await _contentRepository.GetAll();
 
-            var contentOverviews = contents.Where(c => !c.Hidden)
+            var contentOverviews = contents.Where(c => !c.Hidden && !nonOverviewContent.Contains(c.Id))
                 .Select(c =>
                 {
                     return new ContentOverviewDto()
