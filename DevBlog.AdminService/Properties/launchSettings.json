@@ -1,0 +1,12 @@
+﻿{
+  "profiles": {
+    "DevBlog.AdminService Development": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "applicationUrl": "http://localhost:7777",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
