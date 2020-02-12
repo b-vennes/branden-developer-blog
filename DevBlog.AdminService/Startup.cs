@@ -32,6 +32,7 @@ namespace DevBlog.AdminService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddGrpc();
+            services.AddLogging();
 
             services.AddScoped<IMongoClient, MongoClient>(sp => new MongoClient(Configuration.GetConnectionString("DefaultConnection")));
             

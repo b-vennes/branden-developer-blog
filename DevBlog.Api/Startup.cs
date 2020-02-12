@@ -37,7 +37,8 @@ namespace DevBlog.Api
             services.AddScoped<IMongoClient, MongoClient>(sp => new MongoClient(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddCors();
-            
+            services.AddLogging();
+
             services.AddScoped<IContentRepository, ContentRepository>();
             services.AddScoped<IContentService, ContentService>();
             services.AddScoped<IContentDataRetriever, ContentDataRetriever>();

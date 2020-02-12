@@ -5,18 +5,21 @@ using System.Threading.Tasks;
 using DevBlog.Domain.Data;
 using DevBlog.Domain.DataBaseModels;
 using DevBlog.Domain.Dtos;
+using Microsoft.Extensions.Logging;
 
 namespace DevBlog.Domain.Services
 {
     public class ContentService : IContentService
     {
+        private readonly ILogger<ContentService> _logger;
         private readonly IContentRepository _contentRepository;
         private readonly IContentDataRetriever _contentDataRetriever;
 
         private readonly string[] nonOverviewContent = { "about", "resume" };
 
-        public ContentService(IContentRepository contentRepository, IContentDataRetriever contentDataRetriever)
+        public ContentService(ILogger<ContentService> logger, IContentRepository contentRepository, IContentDataRetriever contentDataRetriever)
         {
+            _logger = logger;
             _contentRepository = contentRepository;
             _contentDataRetriever = contentDataRetriever;
         }
@@ -27,10 +30,14 @@ namespace DevBlog.Domain.Services
 
             if (content == null)
             {
-                throw new ArgumentException($"Content with id {id} was not found.");
+                var errorMessage = $"Content with id {id} was not found.";
+                _logger.LogError(errorMessage);
+                throw new ArgumentException(errorMessage);
             }
 
             _contentRepository.Delete(content);
+
+            _logger.LogInformation($"Successfully deleted content with id {content.Id}");
         }
 
         public async Task Publish(PublishContentDto publishContent)
@@ -39,7 +46,9 @@ namespace DevBlog.Domain.Services
 
             if (contents.Any(c => c.Id == publishContent.Id))
             {
-                throw new ArgumentException($"Content with id {publishContent.Id} already exists.");
+                var errorMessage = $"Content with id {publishContent.Id} already exists.";
+                _logger.LogError(errorMessage);
+                throw new ArgumentException(errorMessage);
             }
 
             var data = _contentDataRetriever.GetData(publishContent.Url, publishContent.Format);
@@ -58,6 +67,8 @@ namespace DevBlog.Domain.Services
             };
 
             _contentRepository.Add(content);
+
+            _logger.LogInformation($"Successfully added content with id {content.Id}");
         }
 
         public async Task<ContentDataDto> RetrieveContentData(string id)
@@ -121,6 +132,8 @@ namespace DevBlog.Domain.Services
             contentToUpdate.UpdatedDate = DateTime.Now;
 
             _contentRepository.Update(contentToUpdate);
+
+            _logger.LogInformation($"Successfully updated content with id {id}");
         }
     }
 }

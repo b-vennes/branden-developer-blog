@@ -12,9 +12,12 @@ namespace DevBlog.AdminService.Services
 {
     public class AdminContentService : Content.ContentBase
     {
+        private readonly ILogger<AdminContentService> _logger;
         private readonly IContentService _contentService;
-        public AdminContentService(IContentService contentService)
+
+        public AdminContentService(ILogger<AdminContentService> logger,  IContentService contentService)
         {
+            _logger = logger;
             _contentService = contentService;
         }
 
@@ -30,15 +33,17 @@ namespace DevBlog.AdminService.Services
                 Hidden = request.Hidden
             };
 
-            var success = true;
+            var success = false;
             var errorMessage = "";
 
             try
             {
                 await _contentService.Publish(publishDto);
+                success = true;
             }
             catch (Exception ex)
             {
+                _logger.LogError($"Error while publishing content with id {request.Id}: {ex}");
                 errorMessage = $"{ex}";
             }
 
@@ -60,15 +65,17 @@ namespace DevBlog.AdminService.Services
                 Hidden = request.Hidden
             };
 
-            var success = true;
+            var success = false;
             var errorMessage = "";
 
             try
             {
                 await _contentService.Update(request.Id, updateDto);
+                success = true;
             }
             catch (Exception ex)
             {
+                _logger.LogError($"Error while updating content with id {request.Id}: {ex}");
                 errorMessage = $"{ex}";
             }
 
@@ -81,15 +88,17 @@ namespace DevBlog.AdminService.Services
 
         public async override Task<Result> Delete(DeleteRequest request, ServerCallContext context)
         {
-            var success = true;
+            var success = false;
             var errorMessage = "";
 
             try
             {
                 await _contentService.Delete(request.Id);
+                success = true;
             }
             catch (Exception ex)
             {
+                _logger.LogError($"Error while updating content with id {request.Id}: {ex}");
                 errorMessage = $"{ex}";
             }
 
