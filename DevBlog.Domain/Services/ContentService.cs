@@ -56,12 +56,12 @@ namespace DevBlog.Domain.Services
             var content = new Content()
             {
                 Id = publishContent.Id,
-                Title = publishContent.Title,
-                Summary = publishContent.Summary,
-                ImageUrl = publishContent.ImageUrl,
-                Data = data,
+                Title = publishContent.Title ?? "",
+                Summary = publishContent.Summary ?? "",
+                ImageUrl = publishContent.ImageUrl ?? "",
+                Data = data ?? "",
                 Hidden = publishContent.Hidden,
-                Format = publishContent.Format,
+                Format = publishContent.Format ?? "",
                 PublishedDate = DateTime.Now,
                 UpdatedDate = DateTime.Now
             };
@@ -123,11 +123,11 @@ namespace DevBlog.Domain.Services
 
             var updatedData = _contentDataRetriever.GetData(updateContent.Url, updateContent.Format);
 
-            contentToUpdate.Title = updateContent.Title;
-            contentToUpdate.Data = updatedData;
-            contentToUpdate.Summary = updateContent.Summary;
-            contentToUpdate.ImageUrl = updateContent.ImageUrl;
-            contentToUpdate.Format = updateContent.Format;
+            contentToUpdate.Title = updateContent.Title ?? contentToUpdate.Title;
+            contentToUpdate.Data = updatedData ?? contentToUpdate.Data;
+            contentToUpdate.Summary = updateContent.Summary ?? contentToUpdate.Summary;
+            contentToUpdate.ImageUrl = updateContent.ImageUrl ?? contentToUpdate.ImageUrl;
+            contentToUpdate.Format = updateContent.Format ?? contentToUpdate.Format;
             contentToUpdate.Hidden = updateContent.Hidden;
             contentToUpdate.UpdatedDate = DateTime.Now;
 
