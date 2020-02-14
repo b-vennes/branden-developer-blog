@@ -21,7 +21,9 @@ namespace DevBlog.AdminService
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder
+                        .UseStartup<Startup>()
+                        .UseUrls("http://0.0.0.0:7777");
                 });
     }
 }
