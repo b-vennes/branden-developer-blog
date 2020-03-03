@@ -42,11 +42,11 @@ namespace DevBlog.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                app.UseStaticFiles();
             }
 
             app.UseRouting();
-
-            app.UseStaticFiles();
 
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
